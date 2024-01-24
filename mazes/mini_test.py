@@ -1,9 +1,19 @@
 # /mazes/mini_test.py
+from __future__ import annotations
+
+from pathlib import Path
 
 from maze_solver.models.border import Border
 from maze_solver.models.maze import Maze
 from maze_solver.models.role import Role
+from maze_solver.models.solution import Solution
 from maze_solver.models.square import Square
+from maze_solver.view.primitives import tag
+from maze_solver.view.renderer import SVGRenderer
+
+print(tag('svg'))
+tag('svg')
+tag('svg', 'Your web browser not support SVG')
 
 mini_maze = Maze(
     squares=(
@@ -19,5 +29,11 @@ mini_maze = Maze(
         Square(9, 2, 1, Border.BOTTOM),
         Square(10, 2, 2, Border.TOP | Border.LEFT),
         Square(11, 2, 3, Border.BOTTOM | Border.RIGHT),
-    )
+    ),
 )
+
+
+solution = Solution(squares=tuple(mini_maze[i] for i in (8, 11, 7, 6, 2)))
+svg = SVGRenderer().render(mini_maze, solution)
+with Path('maze.svg').open(mode='w', encoding='utf-8') as file:
+    file.write(svg.xml_content)
