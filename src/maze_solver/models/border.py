@@ -1,8 +1,8 @@
 # models/border.py
+from __future__ import annotations
 
-# (0,0,0,0) == (right, left, down, up)
-
-from enum import IntFlag, auto
+from enum import auto
+from enum import IntFlag
 
 
 class Border(IntFlag):

@@ -2,13 +2,14 @@
 from __future__ import annotations
 
 from maze_solver.models.border import Border
-from maze_solver.view.primitives import DisjointLine
-from maze_solver.view.primitives import Line
-from maze_solver.view.primitives import NullPrimitive
-from maze_solver.view.primitives import Point
-from maze_solver.view.primitives import Polygon
-from maze_solver.view.primitives import Polyline
-from maze_solver.view.primitives import Primitive
+
+from src.maze_solver.view.primitives_ import DisjointLine
+from src.maze_solver.view.primitives_ import Line
+from src.maze_solver.view.primitives_ import NullPrimitive
+from src.maze_solver.view.primitives_ import Point
+from src.maze_solver.view.primitives_ import Polygon
+from src.maze_solver.view.primitives_ import Polyline
+from src.maze_solver.view.primitives_ import Primitive
 
 
 def decompose(border: Border, top_left: Point, square_size: int) -> Primitive:
@@ -99,10 +100,10 @@ def decompose(border: Border, top_left: Point, square_size: int) -> Primitive:
         )
 
     if border is Border.LEFT | Border.RIGHT:
-        return DisjointLines([left, right])
+        return DisjointLine([left, right])
 
     if border is Border.TOP | Border.BOTTOM:
-        return DisjointLines([top, bottom])
+        return DisjointLine([top, bottom])
 
     if border is Border.TOP:
         return top

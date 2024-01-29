@@ -1,8 +1,5 @@
-# model/square.py
-
-# Convey information about maze lcation
-# Every square has a coordinate
-# Squares should have border pattern. Roles optional
+# models/square.py
+from __future__ import annotations
 
 from dataclasses import dataclass
 
