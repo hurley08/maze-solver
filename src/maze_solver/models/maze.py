@@ -1,16 +1,24 @@
 # models/maze.py
+from __future__ import annotations
 
+from collections.abc import Iterator
 from dataclasses import dataclass
 from functools import cached_property
-from typing import Iterator
+from pathlib import Path
 
-from maze_solver.models.square import Square
 from maze_solver.models.role import Role
+from maze_solver.models.square import Square
+from maze_solver.persistence.serializer import dump_squares
+from maze_solver.persistence.serializer import load_squares
 
 
 @dataclass(frozen=True)
 class Maze:
     squares: tuple[Square, ...]
+
+    @classmethod
+    def load(cls, path: Path) -> Maze:
+        return Maze(tuple(load_squares(path)))
 
     def __post_init__(self) -> None:
         validate_indices(self)
@@ -40,28 +48,31 @@ class Maze:
     def exit(self) -> Square:
         return next(sq for sq in self if sq.role is Role.EXIT)
 
+    def dump(self, path: Path) -> None:
+        dump_squares(self.width, self.height, self.squares, path)
+
 
 def validate_indices(maze: Maze) -> None:
     assert [square.index for square in maze] == list(
-        range(len(maze.squares))
-    ), "Wrong square.index"
+        range(len(maze.squares)),
+    ), 'Wrong square.index'
 
 
 def validate_rows_columns(maze: Maze) -> None:
     for y in range(maze.height):
         for x in range(maze.width):
             square = maze[y * maze.width + x]
-            assert square.row == y, "Wrong square row"
-            assert square.column == x, "Wrong square column"
+            assert square.row == y, 'Wrong square.row'
+            assert square.column == x, 'Wrong square.column'
 
 
 def validate_entrance(maze: Maze) -> None:
     assert 1 == sum(
         1 for square in maze if square.role is Role.ENTRANCE
-    ), "Must have exactly one entrance"
+    ), 'Must be exactly one entrance'
 
 
 def validate_exit(maze: Maze) -> None:
     assert 1 == sum(
         1 for square in maze if square.role is Role.EXIT
-    ), "Must have exactly one exit"
+    ), 'Must be exactly one exit'
