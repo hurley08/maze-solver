@@ -29,7 +29,8 @@ class Solution:
 
 
 def validate_corridor(current: Square, following: Square) -> Square:
-    assert any(
-        [current.row == following.row, current.column == following.column],
-    )  # Squares must lie in the same row or column
+    assert any([
+        current.row == following.row,
+        current.column == following.column,
+    ]), 'Squares must lie in the same row or column'
     return following

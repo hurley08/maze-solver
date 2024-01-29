@@ -50,11 +50,11 @@ class Polyline(tuple[Point, ...]):
 
 class Polygon(tuple[Point, ...]):
     def draw(self, **attributes) -> str:
-        points = ' '.join(point.draw() for point in self)
+        points = ' '.join(point.draw() for points in self)
         return tag('polygon', points=points, **attributes)
 
 
-class DisjointLines(tuple[Line, ...]):
+class DisjointLine(tuple[Line, ...]):
     def draw(self, **attributes) -> str:
         return ''.join(line.draw(**attributes) for line in self)
 
@@ -87,9 +87,13 @@ class Text:
 
 
 def tag(name: str, value: str | None = None, **attributes) -> str:
-    attrs = '' if not attributes else ' ' + ' '.join(
-        f'{key.replace("_", "-")}="{value}"'
-        for key, value in attributes.items()
+    attrs = (
+        ''
+        if not attributes
+        else ' '
+        + ' '.join(
+            f'{key.replace("_", "-")}="{value}"' for key, value in attributes.items()
+        )
     )
     if value is None:
         return f'<{name}{attrs} />'
