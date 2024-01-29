@@ -8,11 +8,8 @@ from maze_solver.models.role import Role
 from maze_solver.models.solution import Solution
 from maze_solver.models.square import Square
 from maze_solver.view.decomposer import decompose
-from maze_solver.view.primitives import Point
-from maze_solver.view.primitives import Polyline
-from maze_solver.view.primitives import Rect
-from maze_solver.view.primitives import tag
-from maze_solver.view.primitives import Text
+from maze_solver.view.primitives import Point, Polyline, Rect, tag, Text
+
 
 ROLE_EMOJI = {
     Role.ENTRANCE: '\N{pedestrian}',
